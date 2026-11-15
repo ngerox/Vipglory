@@ -245,9 +245,9 @@
     "glory_gained": 0,
     "elapsed_seconds": 1026,
     "remaining_seconds": 27773,
-    "status": "STOPPED",
-    "stage": "STOPPED",
-    "stage_note": "stopped",
+    "status": "RUNNING",
+    "stage": "RUNNING",
+    "stage_note": "4 bots online \u00b7 8h timer",
     "stage_at": 1794713197,
     "created_at": "2026-11-15 08:55:26",
     "auth_uids": [
@@ -268,7 +268,7 @@
         "gained_exp": 0,
         "glory_gained": 0,
         "matches": 0,
-        "status": "OFFLINE"
+        "status": "ONLINE"
       },
       {
         "uid": "8454299270",
@@ -281,7 +281,7 @@
         "gained_exp": 0,
         "glory_gained": 0,
         "matches": 0,
-        "status": "OFFLINE"
+        "status": "ONLINE"
       },
       {
         "uid": "8454299272",
@@ -294,7 +294,7 @@
         "gained_exp": 0,
         "glory_gained": 0,
         "matches": 0,
-        "status": "OFFLINE"
+        "status": "ONLINE"
       },
       {
         "uid": "8454299275",
@@ -307,7 +307,7 @@
         "gained_exp": 0,
         "glory_gained": 0,
         "matches": 0,
-        "status": "OFFLINE"
+        "status": "ONLINE"
       }
     ],
     "pending_accounts": [

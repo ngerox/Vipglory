@@ -18,13 +18,16 @@ BIO_API = "https://star-bio-api.lovable.app/api/public/bio-upload"
 GEN_FILE = os.path.join(BASE_DIR, "gen.py")
 MAIN_FILE = os.path.join(BASE_DIR, "app.py")
 GEN_OUT_DIR = os.path.join(BASE_DIR, "RBC1_GENS")
-RUNTIME_DIR = os.path.join(BASE_DIR, "runtime")
+# On Railway: add a Volume mounted at /data and set DATA_DIR=/data so users/coupons/settings survive redeploys
+DATA_DIR = os.environ.get("DATA_DIR") or os.environ.get("RAILWAY_VOLUME_MOUNT_PATH") or BASE_DIR
+os.makedirs(DATA_DIR, exist_ok=True)
+RUNTIME_DIR = os.path.join(DATA_DIR, "runtime")
 TEMPLATES_DIR = os.path.join(BASE_DIR, "templates")
-DB_FILE = os.path.join(BASE_DIR, "glory_groups.json")
-SETTINGS_FILE = os.path.join(BASE_DIR, "settings.json")
-USERS_FILE = os.path.join(BASE_DIR, "users.json")
-MANUAL_ACCS_FILE = os.path.join(BASE_DIR, "manual_accounts.json")
-COUPONS_FILE = os.path.join(BASE_DIR, "coupons.json")
+DB_FILE = os.path.join(DATA_DIR, "glory_groups.json")
+SETTINGS_FILE = os.path.join(DATA_DIR, "settings.json")
+USERS_FILE = os.path.join(DATA_DIR, "users.json")
+MANUAL_ACCS_FILE = os.path.join(DATA_DIR, "manual_accounts.json")
+COUPONS_FILE = os.path.join(DATA_DIR, "coupons.json")
 
 os.makedirs(RUNTIME_DIR, exist_ok=True)
 os.makedirs(TEMPLATES_DIR, exist_ok=True)
@@ -73,7 +76,7 @@ COUPONS_DB = load_json(COUPONS_FILE, {})
 # ── Admin account (override with env ADMIN_USER / ADMIN_PASS) ──
 ADMIN_USER = os.environ.get("ADMIN_USER", "NGANIL")
 ADMIN_PASS = os.environ.get("ADMIN_PASS", "NG1988")
-GOOGLE_FILE = os.path.join(BASE_DIR, "google.json")
+GOOGLE_FILE = os.path.join(DATA_DIR, "google.json")
 GOOGLE_CFG = load_json(GOOGLE_FILE, {})
 ENV_GOOGLE_CLIENT_ID = os.environ.get("GOOGLE_CLIENT_ID", "")
 ENV_ADMIN_EMAILS = [e.strip().lower() for e in os.environ.get("ADMIN_EMAILS", "").split(",") if e.strip()]
@@ -1202,6 +1205,8 @@ Port: {WEB_PORT}  |  Admin: http://{WEB_HOST}:{WEB_PORT}{ADMIN_SECRET_PATH}
 """, flush=True)
 
     app = web.Application()
+    async def _health(request): return web.json_response({"ok": True})
+    app.router.add_get("/health", _health)
     app.router.add_get("/", page_index)
     app.router.add_get(ADMIN_SECRET_PATH, page_admin)
     app.router.add_get("/admin", page_admin)

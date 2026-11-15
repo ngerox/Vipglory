@@ -48,3 +48,6 @@ Google login · RBAC · Analytics chart · Broadcast banner · Team & Roles · A
 - Google login on user page + admin page: set env `GOOGLE_CLIENT_ID` (and `ADMIN_EMAILS=you@gmail.com` for admin Google access)
 
 - Admin panel -> **Google Login** tab: paste Client ID, Save, then sign in with Google to mark it Verified (no env needed). Admin emails can be managed there too.
+
+## Deploy on Railway
+See RAILWAY.md
