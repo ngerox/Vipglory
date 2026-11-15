@@ -1,0 +1,10 @@
+{
+  "NGANIL": {
+    "username": "NGANIL",
+    "password": "NG1988",
+    "is_admin": true,
+    "unlimited": true,
+    "credits": 999999,
+    "groups": []
+  }
+}
