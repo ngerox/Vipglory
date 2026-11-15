@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#020408">
+  <title>FF GLORY · Guild Glory Dashboard</title>
+  <meta name="description" content="FF GLORY – fast, secure guild glory dashboard. Launch, monitor and manage your guild runs in real time.">
+  <meta property="og:title" content="FF GLORY · Dashboard"><meta property="og:type" content="website">
+  <meta property="og:description" content="Professional guild glory dashboard – owner @NG_RAXX">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 64 64%27%3E%3Crect width=%2764%27 height=%2764%27 rx=%2716%27 fill=%27%2300a8c4%27/%3E%3Ctext x=%2732%27 y=%2742%27 font-size=%2728%27 text-anchor=%27middle%27 fill=%27white%27 font-family=%27Arial%27 font-weight=%27700%27%3EFF%3C/text%3E%3C/svg%3E">
+  <script>window.BG_PUB={GOOGLE_CLIENT_ID:"",OWNER:"@NG_RAXX"};</script>
+  <!-- Premium Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    /* ─── FF GLORY · Ultra-Premium Design System ─── */
+    :root {
+      --bg: #000000;
+      --bg-elevated: #050505;
+      --bg-card: #0a0a0a;
+      --bg-card-hover: #111111;
+      --bg-input: #000000;
+      --border: rgba(255, 255, 255, 0.055);
+      --border-light: rgba(255, 255, 255, 0.09);
+      --border-strong: rgba(255, 255, 255, 0.14);
+      --accent: #00e5ff;
+      --accent-dark: #0097b2;
+      --accent-glow: rgba(0, 229, 255, 0.25);
+      --accent-soft: rgba(0, 229, 255, 0.07);
+      --gold: #f5c518;
+      --gold-soft: rgba(245, 197, 24, 0.1);
+      --text: #eef2f7;
+      --text-secondary: #8b98ab;
+      --dim: #5a6778;
+      --danger: #ff4d6d;
+      --danger-soft: rgba(255, 77, 109, 0.1);
+      --ok: #34d399;
+      --ok-soft: rgba(52, 211, 153, 0.1);
+      --warn: #f5c518;
+      --font-display: 'Orbitron', system-ui, sans-serif;
+      --font-body: 'Orbitron', system-ui, sans-serif;
+      --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+      --radius-xl: 22px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --shadow-card: 0 10px 32px rgba(0, 0, 0, 0.55);
+      --shadow-elevated: 0 18px 50px rgba(0, 0, 0, 0.7);
+      --transition: all 0.24s cubic-bezier(0.2, 0.9, 0.4, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      background-image:
+        radial-gradient(ellipse 70% 50% at 50% -10%, rgba(0, 229, 255, 0.06) 0%, transparent 70%),
+        radial-gradient(circle at 0% 100%, rgba(0, 229, 255, 0.03) 0%, transparent 50%);
+      background-attachment: fixed;
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 99px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+
+    .hidden { display: none !important; }
+
+    /* ─── Surfaces ─── */
+    .surface {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .surface::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.14), transparent);
+      opacity: 0.6;
+    }
+
+    .surface:hover {
+      border-color: var(--border-light);
+      box-shadow: var(--shadow-card);
+    }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border-radius: var(--radius-sm);
+      padding: 11px 18px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+      transition: var(--transition);
+      font-family: var(--font-body);
+      -webkit-tap-highlight-color: transparent;
+      outline: none;
+      white-space: nowrap;
+      letter-spacing: 0.01em;
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .btn i {
+      font-size: 13px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #000a0f;
+      box-shadow: 0 0 20px var(--accent-glow), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+      font-weight: 700;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: #2aebff;
+      box-shadow: 0 0 34px rgba(0, 229, 255, 0.5);
+      transform: translateY(-1.5px);
+    }
+
+    .btn-ghost {
+      background: rgba(255, 255, 255, 0.035);
+      color: var(--text);
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      background: rgba(255, 255, 255, 0.075);
+      border-color: var(--border-strong);
+    }
+
+    .btn-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid rgba(255, 77, 109, 0.25);
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: rgba(255, 77, 109, 0.2);
+      border-color: rgba(255, 77, 109, 0.5);
+    }
+
+    .btn-sm {
+      padding: 7px 14px;
+      font-size: 12px;
+      border-radius: 8px;
+      gap: 6px;
+    }
+
+    .btn-sm i {
+      font-size: 11px;
+    }
+
+    /* ─── Inputs ─── */
+    .input {
+      width: 100%;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 15px;
+      color: var(--text);
+      font-size: 14px;
+      outline: none;
+      font-family: var(--font-body);
+      transition: var(--transition);
+    }
+
+    .input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(0, 229, 255, 0.12);
+      background: #050b11;
+    }
+
+    .input::placeholder {
+      color: var(--dim);
+    }
+
+    .label {
+      display: block;
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    /* ─── Badges ─── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      border-radius: 99px;
+      padding: 4px 11px;
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+
+    .badge i { font-size: 6.5px; }
+
+    .badge-ok {
+      background: var(--ok-soft);
+      color: var(--ok);
+      border: 1px solid rgba(52, 211, 153, 0.2);
+    }
+
+    .badge-warn {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border: 1px solid rgba(245, 197, 24, 0.2);
+    }
+
+    .badge-danger {
+      background: var(--danger-soft);
+      color: var(--danger);
+      border: 1px solid rgba(255, 77, 109, 0.2);
+    }
+
+    .badge-muted {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-secondary);
+      border: 1px solid var(--border);
+    }
+
+    /* ─── Toast ─── */
+    .toast-container {
+      position: fixed;
+      top: 18px;
+      right: 18px;
+      left: 18px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 9px;
+      pointer-events: none;
+    }
+
+    .toast {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-left: 4px solid var(--accent);
+      padding: 13px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      animation: slideIn 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+      max-width: 380px;
+      pointer-events: auto;
+      box-shadow: var(--shadow-elevated);
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      backdrop-filter: blur(16px);
+      color: var(--text);
+    }
+
+    .toast i { color: var(--accent); font-size: 15px; }
+    .toast.error { border-left-color: var(--danger); }
+    .toast.error i { color: var(--danger); }
+    .toast.success { border-left-color: var(--ok); }
+    .toast.success i { color: var(--ok); }
+
+    @keyframes slideIn {
+      from { transform: translateX(28px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0, 229, 255, 0.35); }
+      50% { box-shadow: 0 0 0 8px rgba(0, 229, 255, 0); }
+    }
+
+    /* ─── Auth Screen ─── */
+    .auth-wrap {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 50% -20%, rgba(0, 229, 255, 0.08) 0%, transparent 70%),
+        radial-gradient(circle at 100% 100%, rgba(0, 229, 255, 0.04) 0%, transparent 40%);
+    }
+
+    .auth-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-xl);
+      padding: 36px 32px;
+      width: 100%;
+      max-width: 420px;
+      animation: fadeIn 0.35s cubic-bezier(0.2, 0.9, 0.4, 1);
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .auth-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.7;
+    }
+
+    .brand-mark {
+      width: 46px;
+      height: 46px;
+      border-radius: 15px;
+      background: linear-gradient(145deg, #00e5ff, #0097b2 60%, #006b80);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #000a0f;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.04em;
+      box-shadow: 0 0 24px var(--accent-glow), inset 0 1px 2px rgba(255, 255, 255, 0.45);
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #fff;
+    }
+
+    .auth-err {
+      color: var(--danger);
+      font-size: 12px;
+      margin-top: 8px;
+      font-weight: 500;
+    }
+
+    .auth-divider {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 18px;
+    }
+
+    .auth-divider a {
+      color: var(--accent);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .auth-divider a:hover {
+      text-decoration: underline;
+    }
+
+    /* ─── App Shell ─── */
+    .app-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Topbar ─── */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(2, 4, 8, 0.88);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .topbar-brand .brand-mark {
+      width: 36px;
+      height: 36px;
+      font-size: 13px;
+      border-radius: 11px;
+    }
+
+    .topbar-brand .brand-name {
+      font-family: var(--font-display);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .topbar-brand .brand-name span {
+      color: var(--accent);
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .user-chip {
+      font-size: 12px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .credits-pill {
+      background: var(--accent-soft);
+      color: var(--accent);
+      border: 1px solid rgba(0, 229, 255, 0.2);
+      padding: 6px 12px;
+      border-radius: 99px;
+      font-size: 12.5px;
+      font-weight: 700;
+      font-family: var(--font-mono);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.08);
+    }
+
+    .credits-pill i {
+      font-size: 11px;
+    }
+
+    /* ─── Main Content ─── */
+    .main-area {
+      flex: 1;
+      max-width: 1000px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 22px 20px;
+      padding-bottom: 110px;
+      animation: fadeIn 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+    }
+
+    .page { animation: fadeIn 0.3s cubic-bezier(0.2, 0.9, 0.4, 1); }
+
+    .page-h1 {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      margin-bottom: 20px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .page-h1 i {
+      color: var(--accent);
+      font-size: 22px;
+      filter: drop-shadow(0 0 12px var(--accent-glow));
+    }
+
+    /* ─── Cards ─── */
+    .card {
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .card-title i {
+      color: var(--accent);
+      font-size: 13px;
+    }
+
+    /* ─── Stats ─── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .stat-box {
+      padding: 18px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--accent), transparent 70%);
+      opacity: 0.6;
+    }
+
+    .stat-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--dim);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .stat-label i {
+      color: var(--accent);
+      font-size: 10px;
+      opacity: 0.9;
+    }
+
+    .stat-val {
+      font-family: var(--font-display);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      letter-spacing: -0.03em;
+      text-shadow: 0 0 22px var(--accent-glow);
+    }
+
+    /* ─── Forms ─── */
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .row {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    /* ─── Guild Preview ─── */
+    .guild-preview {
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: 12.5px;
+      display: none;
+    }
+
+    .guild-preview.show {
+      display: block;
+      animation: fadeIn 0.3s cubic-bezier(0.2, 0.9, 0.4, 1);
+    }
+
+    .gp-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+    }
+
+    .gp-row:last-child { border: 0; }
+
+    .gp-row span:first-child {
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    .gp-row span:last-child {
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    /* ─── Maintenance Banner ─── */
+    .maint-banner {
+      background: rgba(245, 197, 24, 0.06);
+      border: 1px solid rgba(245, 197, 24, 0.25);
+      border-left: 3px solid var(--gold);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      margin-bottom: 18px;
+      color: var(--gold);
+      font-size: 13px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .maint-banner i {
+      font-size: 15px;
+      margin-top: 1px;
+    }
+
+    /* ─── Group Cards ─── */
+    .group-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 16px;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .group-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(0, 229, 255, 0.18), transparent);
+    }
+
+    .group-card:hover {
+      border-color: var(--border-light);
+      box-shadow: var(--shadow-card);
+      transform: translateY(-2px);
+    }
+
+    .group-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .group-name {
+      font-size: 17px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+      letter-spacing: -0.02em;
+    }
+
+    .group-meta {
+      font-size: 11px;
+      color: var(--dim);
+      font-family: var(--font-mono);
+      margin-top: 6px;
+    }
+
+    .group-glory {
+      text-align: right;
+      flex-shrink: 0;
+    }
+
+    .group-glory-label {
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--dim);
+      margin-bottom: 4px;
+    }
+
+    .group-glory-val {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+      text-shadow: 0 0 28px rgba(0, 229, 255, 0.35);
+      letter-spacing: -0.03em;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      padding: 14px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .meta-item {
+      font-size: 11px;
+    }
+
+    .meta-item .ml {
+      color: var(--dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 4px;
+      font-size: 9.5px;
+    }
+
+    .meta-item .mv {
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    /* ─── Progress ─── */
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 8px;
+      letter-spacing: 0.06em;
+    }
+
+    .progress-bar {
+      height: 8px;
+      background: rgba(0, 229, 255, 0.08);
+      border-radius: 99px;
+      overflow: hidden;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #00e5ff, #67e8f9);
+      border-radius: 99px;
+      transition: width 0.6s cubic-bezier(0.2, 0.9, 0.4, 1);
+      box-shadow: 0 0 14px rgba(0, 229, 255, 0.5);
+      position: relative;
+    }
+
+    .progress-fill::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+      animation: shimmer 2s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* ─── Actions ─── */
+    .actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .actions .btn {
+      flex: 1;
+      min-width: 110px;
+    }
+
+    /* ─── Empty State ─── */
+    .empty-state {
+      text-align: center;
+      padding: 52px 24px;
+      color: var(--text-secondary);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+
+    .empty-state .empty-icon {
+      font-size: 38px;
+      color: var(--dim);
+      margin-bottom: 16px;
+      opacity: 0.6;
+    }
+
+    .empty-state h3 {
+      font-family: var(--font-display);
+      font-size: 17px;
+      color: var(--text);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+
+    .empty-state p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ─── Coupon Input Row ─── */
+    .coupon-input-row {
+      display: flex;
+      gap: 9px;
+      margin-top: 4px;
+    }
+
+    /* ─── Bottom Navigation ─── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      background: rgba(2, 4, 8, 0.96);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid var(--border);
+    }
+
+    .bottom-nav-inner {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 8px;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 0;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--dim);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-body);
+      transition: var(--transition);
+      position: relative;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .nav-btn svg {
+      width: 19px;
+      height: 19px;
+      transition: var(--transition);
+    }
+
+    .nav-btn.active {
+      color: var(--accent);
+    }
+
+    .nav-btn.active svg {
+      filter: drop-shadow(0 0 8px var(--accent-glow));
+    }
+
+    .nav-btn.active::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 2px;
+      background: var(--accent);
+      border-radius: 0 0 4px 4px;
+      box-shadow: 0 0 10px var(--accent);
+    }
+
+    .nav-btn:hover {
+      color: var(--text-secondary);
+    }
+
+    .nav-btn.active:hover {
+      color: var(--accent);
+    }
+
+    /* ─── Modals ─── */
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.78);
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 18px;
+      animation: fadeIn 0.2s;
+    }
+
+    .modal-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-xl);
+      padding: 28px;
+      width: 100%;
+      max-width: 440px;
+      animation: fadeIn 0.28s cubic-bezier(0.2, 0.9, 0.4, 1);
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: var(--shadow-elevated);
+      position: relative;
+    }
+
+    .modal-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.7;
+    }
+
+    .modal-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 800;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+      color: #fff;
+    }
+
+    .modal-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 18px;
+      line-height: 1.6;
+    }
+
+    .modal-detail {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .modal-detail-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+
+    .modal-detail-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .modal-detail-row span:first-child {
+      color: var(--text-secondary);
+    }
+
+    .modal-detail-row span:last-child {
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .modal-detail-row .accent-val {
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .modal-actions .btn {
+      flex: 1;
+      padding: 13px;
+    }
+
+    /* ─── Overflow Sheet ─── */
+    .overflow-sheet {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 18px;
+      animation: fadeIn 0.2s;
+    }
+
+    .overflow-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-strong);
+      border-radius: var(--radius-xl);
+      padding: 20px;
+      width: 100%;
+      max-width: 480px;
+      animation: fadeIn 0.28s cubic-bezier(0.2, 0.9, 0.4, 1);
+      box-shadow: var(--shadow-elevated);
+    }
+
+    .overflow-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .overflow-title {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-secondary);
+    }
+
+    .overflow-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+
+    .overflow-grid .btn {
+      justify-content: flex-start;
+      padding: 14px 16px;
+    }
+
+    .overflow-grid .full {
+      grid-column: 1 / -1;
+    }
+
+    /* ─── Contact Links ─── */
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 15px 18px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: var(--transition);
+      margin-bottom: 10px;
+    }
+
+    .contact-link i {
+      color: var(--accent);
+      font-size: 17px;
+      width: 22px;
+      text-align: center;
+    }
+
+    .contact-link:hover {
+      background: rgba(255, 255, 255, 0.06);
+      border-color: var(--border-strong);
+      transform: translateX(3px);
+    }
+
+    /* ─── History Card ─── */
+    .history-card {
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+
+    .history-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .history-name {
+      font-weight: 700;
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: #fff;
+    }
+
+    .history-meta {
+      font-size: 11px;
+      color: var(--dim);
+      font-family: var(--font-mono);
+      margin-top: 4px;
+    }
+
+    .history-stats {
+      margin-top: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .history-stats strong {
+      color: var(--accent);
+      font-family: var(--font-mono);
+    }
+
+    /* ─── Responsive ─── */
+    @media (max-width: 620px) {
+      .page-h1 { font-size: 22px; gap: 10px; }
+      .page-h1 i { font-size: 18px; }
+      .stat-val { font-size: 22px; }
+      .group-glory-val { font-size: 30px; }
+      .meta-grid { grid-template-columns: 1fr 1fr; }
+      .main-area { padding: 18px 14px; padding-bottom: 110px; }
+      .card { padding: 18px; }
+      .auth-box { padding: 28px 22px; }
+      .topbar-inner { padding: 0 14px; height: 58px; }
+      .user-chip { display: none; }
+      .group-card { padding: 18px; }
+      .modal-box { padding: 24px 20px; }
+      .nav-btn span { font-size: 9px; }
+    }
+
+    @media (max-width: 400px) {
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .stat-row .stat-box:last-child { grid-column: 1 / -1; }
+      .group-head { flex-direction: column; }
+      .group-glory { text-align: left; }
+    }
+  
+    .g-or{display:flex;align-items:center;gap:10px;color:var(--dim);font-size:11px;margin:18px 0 12px;text-transform:uppercase;letter-spacing:.1em}
+    .g-or:before,.g-or:after{content:"";flex:1;height:1px;background:var(--border)}
+    #g-login{display:flex;justify-content:center;min-height:44px}
+    .site-foot{text-align:center;padding:26px 16px 40px;color:var(--dim);font-size:12px}
+    .site-foot a{color:var(--accent);text-decoration:none;font-weight:600}
+    @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+    /* ═══ FF GLORY · Premium black ═══ */
+    html,body{background:#000!important;color:#e8e8e8}
+    .btn-primary{background:#fff!important;color:#000!important;font-weight:800;box-shadow:0 0 0 1px rgba(255,255,255,.2),0 8px 28px rgba(255,255,255,.08)!important}
+    .btn-primary:hover{background:#e6e6e6!important}
+    .auth-wrap{background:#000!important;background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(255,255,255,.06),transparent 70%)!important}
+    .brand-mark{background:#fff!important;color:#000!important;box-shadow:none!important}
+    .nav-btn.active{color:#fff!important}
+    .bottom-nav-inner{grid-template-columns:repeat(6,1fr)!important}
+    /* Landing */
+    #landing{max-width:760px;margin:0 auto;padding:22px 18px 40px}
+    #landing .lnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:34px}
+    #landing .lbrand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.08em;color:#fff}
+    .hero{text-align:center;padding:48px 18px 44px;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:radial-gradient(circle at 50% 0%,rgba(255,255,255,.07),transparent 65%),#050505;margin-bottom:34px}
+    .hero h1{font-size:34px;font-weight:900;letter-spacing:.08em;color:#fff}
+    .hero p{color:#9a9a9a;font-size:13px;line-height:1.8;margin:14px auto 28px;max-width:480px;font-family:'Inter',sans-serif}
+    .hero .btn{padding:16px 42px;font-size:15px;letter-spacing:.06em}
+    .sec-h{font-size:13px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#fff;margin:0 0 16px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,.1)}
+    .steps{display:grid;gap:12px;margin-bottom:36px}
+    .step{display:flex;gap:14px;align-items:flex-start;padding:16px;border-radius:16px;background:#080808;border:1px solid rgba(255,255,255,.09)}
+    .step .n{flex:0 0 38px;height:38px;border-radius:12px;display:grid;place-items:center;font-weight:900;color:#000;background:#fff}
+    .step b{display:block;font-size:13px;margin-bottom:4px;color:#fff}
+    .step span{font-size:12px;color:#9a9a9a;line-height:1.7;font-family:'Inter',sans-serif}
+    .feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-bottom:36px}
+    .feat div{padding:18px 14px;border-radius:16px;background:#080808;border:1px solid rgba(255,255,255,.09);text-align:center}
+    .feat i{font-size:20px;margin-bottom:10px;display:block;color:#fff}
+    .feat b{display:block;font-size:12px;margin-bottom:5px;color:#fff}
+    .feat small{font-size:11px;color:#8a8a8a;line-height:1.6;display:block;font-family:'Inter',sans-serif}
+    .lfoot{text-align:center;margin-top:10px}
+    .lfoot .btn{margin:0 5px 8px;text-decoration:none}
+    .back-link{display:inline-block;margin-bottom:14px;font-size:12px;color:#9a9a9a;cursor:pointer}
+    .gen-out{width:100%;min-height:110px;margin-top:12px;font-family:'JetBrains Mono',monospace;font-size:12px;color:#e8e8e8}
+    .only-admin.hidden{display:none!important}
+  </style>
+</head>
+<body>
+
+<div class="toast-container" id="toast-container"></div>
+
+<!-- ─── Auth Screen ─── -->
+<!-- LANDING (shown before login) -->
+<div id="landing" class="hidden">
+  <div class="lnav">
+    <div class="lbrand"><div class="brand-mark">FF</div>FF GLORY</div>
+    <button class="btn btn-ghost btn-sm" onclick="startNow()">Sign in</button>
+  </div>
+  <div class="hero">
+    <h1>FF GLORY</h1>
+    <p>Boost your guild glory automatically. Add your Guild ID, press start, and watch live progress from your dashboard.</p>
+    <button class="btn btn-primary" onclick="startNow()"><i class="fas fa-rocket"></i> Start It</button>
+  </div>
+
+  <div class="sec-h">How to use</div>
+  <div class="steps">
+    <div class="step"><div class="n">1</div><div><b>Sign in</b><span>Create an account with username &amp; password, or continue with Google.</span></div></div>
+    <div class="step"><div class="n">2</div><div><b>Get credits</b><span>Open the Coupons tab and redeem an <code>FF-XXX-XXX-XXX</code> code. Need one? Contact us on Telegram.</span></div></div>
+    <div class="step"><div class="n">3</div><div><b>Enter Guild ID</b><span>Pick your region, type the Guild ID and tap Preview Guild to confirm it is correct.</span></div></div>
+    <div class="step"><div class="n">4</div><div><b>Start Glory</b><span>Press Start Glory. Track bots and glory live under Active Instances. You can stop, restart or refund from there.</span></div></div>
+  </div>
+
+  <div class="sec-h">Features</div>
+  <div class="feat">
+    <div><i class="fas fa-bolt"></i><b>One-tap Start</b><small>Launch glory for any guild in seconds.</small></div>
+    <div><i class="fas fa-satellite-dish"></i><b>Live Monitoring</b><small>Bots online, glory gained and time left, in real time.</small></div>
+    <div><i class="fas fa-globe"></i><b>Multi Region</b><small>IND, BD, ME, TH, ID, VN, PK and more.</small></div>
+    <div><i class="fas fa-rotate"></i><b>Auto Restart</b><small>Runs keep going without babysitting.</small></div>
+    <div><i class="fas fa-ticket-alt"></i><b>Coupons</b><small>Instant credits with FF- codes.</small></div>
+    <div><i class="fab fa-google"></i><b>Google Login</b><small>Sign in fast and safely.</small></div>
+    <div><i class="fas fa-clock-rotate-left"></i><b>History</b><small>See all your past runs.</small></div>
+    <div><i class="fas fa-mobile-screen"></i><b>Mobile Ready</b><small>Works great on phone and desktop.</small></div>
+  </div>
+
+  <div class="lfoot">
+    <button class="btn btn-primary" onclick="startNow()" style="margin-bottom:18px"><i class="fas fa-rocket"></i> Start It</button><br>
+    <a class="btn btn-ghost btn-sm" href="https://t.me/NG_RAXX" target="_blank" rel="noopener"><i class="fab fa-telegram"></i> Contact</a>
+    <a class="btn btn-ghost btn-sm" href="https://t.me/NG_RAXXX" target="_blank" rel="noopener"><i class="fas fa-bullhorn"></i> Channel</a>
+  </div>
+</div>
+
+<div class="auth-wrap hidden" id="auth-screen">
+  <div class="auth-box" id="login-view">
+    <a class="back-link" onclick="showLanding()"><i class="fas fa-arrow-left"></i> Back</a>
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px">
+      <div class="brand-mark">FF</div>
+      <div>
+        <div class="brand-title">FF GLORY</div>
+        <div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">Sign in to your dashboard</div>
+      </div>
+    </div>
+    <form id="login-form">
+      <div class="form-group">
+        <label class="label">Username</label>
+        <input class="input" type="text" id="li-user" required placeholder="username" autocomplete="username">
+      </div>
+      <div class="form-group">
+        <label class="label">Password</label>
+        <input class="input" type="password" id="li-pass" required placeholder="••••••••" autocomplete="current-password">
+      </div>
+      <div class="auth-err hidden" id="li-err"></div>
+      <button class="btn btn-primary" type="submit" style="width:100%;padding:14px;margin-top:10px" id="li-btn">
+        <i class="fas fa-sign-in-alt"></i> Sign In
+      </button>
+    </form>
+    <div class="g-or">or continue with</div><div id="g-login"></div><div class="auth-err hidden" id="g-err"></div>
+    <p class="auth-divider">No account? <a href="#" onclick="showSignup(event)">Create one</a></p>
+  </div>
+
+  <div class="auth-box hidden" id="signup-view">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:28px">
+      <div class="brand-mark">FF</div>
+      <div>
+        <div class="brand-title">Create Account</div>
+        <div style="font-size:12.5px;color:var(--text-secondary);margin-top:2px">Join FF GLORY</div>
+      </div>
+    </div>
+    <form id="signup-form">
+      <div class="form-group">
+        <label class="label">Username</label>
+        <input class="input" type="text" id="su-user" required placeholder="yourname">
+      </div>
+      <div class="form-group">
+        <label class="label">Password (min 8)</label>
+        <input class="input" type="password" id="su-pass" required minlength="8" placeholder="••••••••">
+      </div>
+      <div class="auth-err hidden" id="su-err"></div>
+      <button class="btn btn-primary" type="submit" style="width:100%;padding:14px;margin-top:10px" id="su-btn">
+        <i class="fas fa-user-plus"></i> Create Account
+      </button>
+    </form>
+    <p class="auth-divider">Have an account? <a href="#" onclick="showLogin(event)">Sign in</a></p>
+  </div>
+</div>
+
+<!-- ─── App Shell ─── -->
+<div class="app-shell hidden" id="app-shell">
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-brand">
+        <div class="brand-mark">FF</div>
+        <span class="brand-name">FF <span>GLORY</span></span>
+      </div>
+      <div class="topbar-actions">
+        <span class="user-chip" id="top-user"></span>
+        <span class="credits-pill" id="top-credits"><i class="fas fa-bolt"></i> 0 cr</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-area">
+    <!-- HOME -->
+    <div class="page" id="page-home">
+      <div id="banner-slot"></div>
+      <div class="page-h1"><i class="fas fa-satellite-dish"></i> Command Center</div>
+
+      <div class="stat-row">
+        <div class="surface stat-box">
+          <div class="stat-label"><i class="fas fa-robot"></i> Active Bots</div>
+          <div class="stat-val" id="s-bots">0</div>
+        </div>
+        <div class="surface stat-box">
+          <div class="stat-label"><i class="fas fa-star"></i> Total Glory</div>
+          <div class="stat-val" id="s-glory">0</div>
+        </div>
+        <div class="surface stat-box">
+          <div class="stat-label"><i class="fas fa-play-circle"></i> Running</div>
+          <div class="stat-val" id="s-run">0</div>
+        </div>
+      </div>
+
+      <div class="surface card">
+        <div class="card-title"><i class="fas fa-ticket-alt"></i> Redeem Coupon</div>
+        <div class="coupon-input-row">
+          <input class="input" id="coupon-code" placeholder="FF-XXX-XXX-XXX" style="text-transform:uppercase">
+          <button class="btn btn-primary" onclick="redeemCoupon()"><i class="fas fa-gift"></i> Redeem</button>
+        </div>
+      </div>
+
+      <div class="surface card">
+        <div class="card-title"><i class="fas fa-rocket"></i> Launch Glory</div>
+        <div class="form-group">
+          <label class="label">Region</label>
+          <select class="input" id="launch-region">
+            <option value="IND">India (IND)</option>
+            <option value="BD">Bangladesh (BD)</option>
+            <option value="ME">Middle East (ME)</option>
+            <option value="TH">Thailand (TH)</option>
+            <option value="ID">Indonesia (ID)</option>
+            <option value="VN">Vietnam (VN)</option>
+            <option value="PK">Pakistan (PK)</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="label">Guild ID</label>
+          <input class="input" id="launch-guild" placeholder="e.g. 3055327268" inputmode="numeric">
+        </div>
+        <div class="row" style="margin-bottom:12px">
+          <button class="btn btn-ghost" onclick="previewGuild()" id="btn-preview">
+            <i class="fas fa-search"></i> Preview Guild
+          </button>
+        </div>
+        <div class="guild-preview" id="guild-preview"></div>
+        <button class="btn btn-primary" style="width:100%;padding:15px;margin-top:14px" id="btn-launch" onclick="openLaunchConfirm()">
+          <i class="fas fa-play"></i>
+          <span id="btn-launch-text">Start Glory · 1 Credit</span>
+        </button>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--dim);margin:24px 0 14px">
+        <i class="fas fa-circle" style="color:var(--accent);font-size:6px;vertical-align:middle;margin-right:6px"></i>
+        Active Instances
+      </div>
+      <div id="groups-container"></div>
+    </div>
+
+    <!-- HISTORY -->
+    <div class="page hidden" id="page-history">
+      <div class="page-h1"><i class="fas fa-history"></i> History</div>
+      <div id="history-container"></div>
+    </div>
+
+    <!-- COUPONS -->
+    <div class="page hidden" id="page-coupons">
+      <div class="page-h1"><i class="fas fa-ticket-alt"></i> Coupons</div>
+      <div class="surface card only-admin hidden" id="admin-coupons">
+        <div class="card-title"><i class="fas fa-wand-magic-sparkles"></i> Generate Coupons (Admin · Unlimited)</div>
+        <div class="form-group"><label class="label">Credits per coupon</label><input class="input" id="gc-credits" type="number" min="1" value="10"></div>
+        <div class="form-group"><label class="label">Quantity (no limit)</label><input class="input" id="gc-count" type="number" min="1" value="5"></div>
+        <button class="btn btn-primary" style="width:100%" onclick="genCouponsAdmin()"><i class="fas fa-bolt"></i> Generate</button>
+        <textarea class="input gen-out" id="gc-out" readonly placeholder="Generated codes appear here"></textarea>
+        <button class="btn btn-ghost" style="margin-top:8px" onclick="copyCodes()"><i class="fas fa-copy"></i> Copy all</button>
+        <a class="btn btn-ghost" style="margin-top:8px;text-decoration:none" href="/admin-x9k2" target="_blank"><i class="fas fa-gauge-high"></i> Admin Panel</a>
+      </div>
+      <div class="surface card">
+        <div class="card-title"><i class="fas fa-gift"></i> Redeem Code</div>
+        <div class="coupon-input-row">
+          <input class="input" id="coupon-code-2" placeholder="FF-XXX-XXX-XXX" style="text-transform:uppercase">
+          <button class="btn btn-primary" onclick="redeemCoupon2()"><i class="fas fa-gift"></i> Redeem</button>
+        </div>
+      </div>
+      <div class="surface card">
+        <div class="card-title"><i class="fas fa-info-circle"></i> How it works</div>
+        <p style="font-size:13px;color:var(--text-secondary);line-height:1.7">
+          Enter a valid coupon code to instantly add credits to your account. Coupons are single-use and can be obtained from official channels.
+        </p>
+      </div>
+    </div>
+
+    <!-- LIKES -->
+    <div class="page hidden" id="page-likes">
+      <div class="page-h1"><i class="fas fa-heart"></i> FF Likes</div>
+      <div class="surface card">
+        <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:18px;line-height:1.7">
+          Order likes for your player UID. All payments are verified server-side for maximum security.
+        </p>
+        <button class="btn btn-primary" style="width:100%;padding:15px" onclick="toast('Likes orders coming soon.','error')">
+          <i class="fas fa-heart"></i> Submit Order
+        </button>
+      </div>
+    </div>
+
+    <!-- CONTACT -->
+    <div class="page hidden" id="page-contact">
+      <div class="page-h1"><i class="fas fa-headset"></i> Contact</div>
+      <div class="surface card">
+        <p style="font-size:13.5px;color:var(--text-secondary);margin-bottom:18px;line-height:1.7">
+          Get support or stay updated through our official channels.
+        </p>
+        <a href="https://t.me/NG_RAXX" target="_blank" rel="noopener" class="contact-link">
+          <i class="fab fa-telegram"></i> Contact on Telegram
+        </a>
+        <a href="https://t.me/NG_RAXXX" target="_blank" rel="noopener" class="contact-link">
+          <i class="fas fa-bullhorn"></i> Join Channel
+        </a>
+      </div>
+    </div>
+
+    <!-- GLORY -->
+    <div class="page hidden" id="page-glory">
+      <div class="page-h1"><i class="fas fa-star"></i> Glory</div>
+      <div class="surface card">
+        <p style="font-size:13.5px;color:var(--text-secondary);line-height:1.7">
+          Use the <strong style="color:var(--accent)">Home</strong> page to launch a new Glory instance. Active instances appear on the home dashboard.
+        </p>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="page hidden" id="page-settings">
+      <div class="page-h1"><i class="fas fa-cog"></i> Settings</div>
+      <div class="surface card">
+        <div class="form-group">
+          <label class="label">Username</label>
+          <input class="input" id="st-user" disabled>
+        </div>
+        <div class="form-group">
+          <label class="label">Account Type</label>
+          <input class="input" value="Standard User" disabled>
+        </div>
+        <button class="btn btn-danger" style="width:100%;padding:15px;margin-top:10px" onclick="doSignOut()">
+          <i class="fas fa-sign-out-alt"></i> Sign Out
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Nav -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-inner">
+      <button class="nav-btn active" data-page="home" onclick="navTo('home',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>Home</span>
+      </button>
+      <button class="nav-btn" data-page="history" onclick="navTo('history',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        <span>History</span>
+      </button>
+      <button class="nav-btn" data-page="coupons" onclick="navTo('coupons',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 12a2 2 0 012 2v4a2 2 0 01-2 2h-4a2 2 0 01-2-2"/><path d="M4 12a2 2 0 00-2-2V6a2 2 0 012-2h4a2 2 0 012 2"/><line x1="14" y1="4" x2="20" y2="10"/></svg>
+        <span>Coupons</span>
+      </button>
+      <button class="nav-btn" data-page="likes" onclick="navTo('likes',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+        <span>Likes</span>
+      </button>
+      <button class="nav-btn" data-page="contact" onclick="navTo('contact',this)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+        <span>Contact</span>
+      </button>
+      <button class="nav-btn" onclick="toggleMore()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="5" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+        <span>More</span>
+      </button>
+    </div>
+  </nav>
+</div>
+
+<!-- ─── Confirm Modal ─── -->
+<div class="modal hidden" id="modal-confirm">
+  <div class="modal-box">
+    <div class="modal-title">Confirm Launch</div>
+    <p class="modal-sub">You will spend <strong style="color:var(--accent)" id="cf-cost">1 credit</strong> to start this Glory instance.</p>
+    <div class="modal-detail">
+      <div class="modal-detail-row"><span>Region</span><span id="cf-region"></span></div>
+      <div class="modal-detail-row"><span>Guild ID</span><span class="accent-val" id="cf-guild"></span></div>
+      <div class="modal-detail-row"><span>Bots</span><span id="cf-bots"></span></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-ghost" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-primary" id="cf-go" onclick="executeLaunch()">
+        <i class="fas fa-play"></i> Launch Now
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ─── More Sheet ─── -->
+<div class="overflow-sheet hidden" id="more-sheet" onclick="if(event.target===this)toggleMore()">
+  <div class="overflow-panel">
+    <div class="overflow-header">
+      <span class="overflow-title">More Options</span>
+      <button class="btn btn-ghost btn-sm" onclick="toggleMore()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="overflow-grid">
+      <button class="btn btn-ghost" onclick="navTo('glory',null);toggleMore()"><i class="fas fa-star"></i> Glory</button>
+      <button class="btn btn-ghost" onclick="navTo('settings',null);toggleMore()"><i class="fas fa-cog"></i> Settings</button>
+      <button class="btn btn-danger full" onclick="doSignOut()"><i class="fas fa-sign-out-alt"></i> Sign Out</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ─── FF GLORY · Dashboard Scripts ───
+  const API = '';
+  let currentUser = null;
+  let currentGroups = [];
+  let settings = null;
+  let previewInfo = null;
+  let pendingLaunch = {};
+
+  window.toast = function(msg, type = 'success') {
+    const c = document.getElementById('toast-container');
+    const t = document.createElement('div');
+    t.className = 'toast ' + type;
+    const icon = type === 'error' ? 'fa-exclamation-circle' : (type === 'success' ? 'fa-check-circle' : 'fa-info-circle');
+    t.innerHTML = `<i class="fas ${icon}"></i> ${msg}`;
+    c.appendChild(t);
+    setTimeout(() => {
+      t.style.opacity = '0';
+      t.style.transform = 'translateX(26px)';
+      setTimeout(() => t.remove(), 300);
+    }, 3200);
+  };
+
+  async function api(path, opts) {
+    const r = await fetch(API + path, {
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      ...(opts || {})
+    });
+    const j = await r.json().catch(() => ({ error: r.statusText }));
+    if (!r.ok) throw new Error(j.error || r.statusText);
+    return j;
+  }
+
+  window.showSignup = (e) => {
+    e.preventDefault();
+    document.getElementById('login-view').classList.add('hidden');
+    document.getElementById('signup-view').classList.remove('hidden');
+  };
+  window.showLogin = (e) => {
+    e.preventDefault();
+    document.getElementById('signup-view').classList.add('hidden');
+    document.getElementById('login-view').classList.remove('hidden');
+  };
+
+  document.getElementById('login-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('li-btn'), err = document.getElementById('li-err');
+    err.classList.add('hidden');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing in…';
+    try {
+      const d = await api('/api/login', {
+        method: 'POST', body: JSON.stringify({
+          username: document.getElementById('li-user').value.trim(),
+          password: document.getElementById('li-pass').value
+        })
+      });
+      currentUser = d.user;
+      showApp();
+      await loadSettings();
+      await fetchAll();
+      setInterval(fetchAll, 5000);
+    } catch (ex) {
+      err.textContent = ex.message;
+      err.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Sign In';
+    }
+  });
+
+  document.getElementById('signup-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('su-btn'), err = document.getElementById('su-err');
+    err.classList.add('hidden');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating…';
+    try {
+      await api('/api/signup', {
+        method: 'POST', body: JSON.stringify({
+          username: document.getElementById('su-user').value.trim(),
+          password: document.getElementById('su-pass').value
+        })
+      });
+      toast('Account created — please sign in.', 'success');
+      showLogin(new Event('x'));
+    } catch (ex) {
+      err.textContent = ex.message;
+      err.classList.remove('hidden');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-user-plus"></i> Create Account';
+    }
+  });
+
+  window.doSignOut = async () => {
+    try { await api('/api/logout', { method: 'POST' }); } catch (_) { }
+    location.reload();
+  };
+
+  function showAuth() {
+    document.getElementById('app-shell').classList.add('hidden');
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('landing').classList.remove('hidden');
+  }
+  function showApp() {
+    document.getElementById('landing').classList.add('hidden');
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('app-shell').classList.remove('hidden');
+    applyAdminUI();
+    navTo('home');
+  }
+
+  async function loadSettings() {
+    try {
+      settings = await api('/api/settings/get');
+      const count = settings.credit_per_launch;
+      document.getElementById('btn-launch-text').textContent =
+        `Start Glory · ${count} Credit${count > 1 ? 's' : ''}`;
+      renderBanner();
+    } catch (_) { }
+  }
+
+  function renderBanner() {
+    const b = settings?.global_banner;
+    document.getElementById('banner-slot').innerHTML = (b && b.active)
+      ? `<div class="maint-banner">
+          <i class="fas fa-bullhorn"></i>
+          <div><strong>${escapeHtml(b.title || '')}</strong><br>${escapeHtml(b.body || '')}</div>
+         </div>`
+      : '';
+  }
+
+  window.navTo = function(page, el) {
+    document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
+    document.getElementById('page-' + page).classList.remove('hidden');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    if (el) el.classList.add('active');
+    else {
+      const btn = document.querySelector(`.nav-btn[data-page="${page}"]`);
+      if (btn) btn.classList.add('active');
+    }
+    if (page === 'history') loadHistory();
+  };
+
+
+  window.startNow = function() {
+    document.getElementById('landing').classList.add('hidden');
+    document.getElementById('auth-screen').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  };
+  window.showLanding = function() {
+    document.getElementById('auth-screen').classList.add('hidden');
+    document.getElementById('landing').classList.remove('hidden');
+    window.scrollTo(0, 0);
+  };
+  function applyAdminUI() {
+    const on = !!(currentUser && currentUser.is_admin);
+    document.querySelectorAll('.only-admin').forEach(e => e.classList.toggle('hidden', !on));
+  }
+  window.genCouponsAdmin = async function() {
+    try {
+      const d = await api('/api/coupons', { method: 'POST', body: JSON.stringify({
+        action: 'generate',
+        credits: parseInt(document.getElementById('gc-credits').value) || 1,
+        count: parseInt(document.getElementById('gc-count').value) || 1 }) });
+      document.getElementById('gc-out').value = (d.codes || []).join('\n');
+      toast('Generated ' + (d.codes || []).length + ' coupon(s)');
+    } catch (ex) { toast(ex.message, 'error'); }
+  };
+  window.copyCodes = function() {
+    const t = document.getElementById('gc-out'); if (!t.value) return;
+    (navigator.clipboard ? navigator.clipboard.writeText(t.value) : Promise.reject()).catch(() => { t.select(); document.execCommand('copy'); });
+    toast('Copied');
+  };
+
+  window.toggleMore = function() {
+    document.getElementById('more-sheet').classList.toggle('hidden');
+  };
+
+  async function fetchAll() {
+    try {
+      const s = await api('/api/stats');
+      const g = await api('/api/groups');
+      currentGroups = g.groups || [];
+      document.getElementById('s-bots').textContent = s.online_bots;
+      document.getElementById('s-glory').textContent = s.total_glory;
+      document.getElementById('s-run').textContent = s.groups_running;
+      document.getElementById('top-credits').innerHTML = `<i class="fas fa-bolt"></i> ${s.credits} cr`;
+      const me = await api('/api/me').catch(() => null);
+      if (me?.user) {
+        document.getElementById('top-user').textContent = me.user.username;
+        document.getElementById('st-user').value = me.user.username;
+      }
+      renderGroups(currentGroups.filter(g => g.status === 'RUNNING'));
+    } catch (ex) {
+      if (String(ex.message).includes('Unauthorized')) showAuth();
+    }
+  }
+
+  function renderGroups(list) {
+    const c = document.getElementById('groups-container');
+    if (!list.length) {
+      c.innerHTML = `<div class="empty-state">
+        <div class="empty-icon"><i class="fas fa-satellite-dish"></i></div>
+        <h3>No active groups</h3>
+        <p>Launch a new Glory instance above to begin.</p>
+      </div>`;
+      return;
+    }
+    c.innerHTML = list.map(g => {
+      const started = g.started_at ? new Date(g.started_at).getTime() : Date.now();
+      const elapsedSec = Math.max(0, Math.floor((Date.now() - started) / 1000));
+      const goalSec = (g.goal_hours || settings?.goal_hours || 8) * 3600;
+      const prog = Math.min(100, Math.floor((elapsedSec / goalSec) * 100));
+      return `<div class="group-card">
+        <div class="group-head">
+          <div>
+            <div class="group-name">
+              <span class="badge badge-ok"><i class="fas fa-circle"></i> ${g.status}</span>
+              ${escapeHtml(g.guild_name || 'Unknown Guild')}
+            </div>
+            <div class="group-meta">ID: ${escapeHtml(g.guild_id)} · ${escapeHtml(g.region)}</div>
+          </div>
+          <div class="group-glory">
+            <div class="group-glory-label">Glory Gained</div>
+            <div class="group-glory-val">${g.glory_gained || 0}</div>
+          </div>
+        </div>
+        <div class="meta-grid">
+          <div class="meta-item"><div class="ml">Bots</div><div class="mv">${g.bot_count || 0}</div></div>
+          <div class="meta-item"><div class="ml">Baseline Weekly</div><div class="mv">${g.baseline_weekly || 0}</div></div>
+          <div class="meta-item"><div class="ml">Total Activity</div><div class="mv">${g.total_activity || 0}</div></div>
+          <div class="meta-item"><div class="ml">Elapsed</div><div class="mv">${fmtDur(elapsedSec)}</div></div>
+        </div>
+        <div class="progress-label"><span>Progress</span><span>${prog}%</span></div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${prog}%"></div></div>
+        <div class="actions">
+          <button class="btn btn-danger btn-sm" onclick="stopGroup('${g.group_id}')"><i class="fas fa-stop"></i> Stop</button>
+          <button class="btn btn-ghost btn-sm" onclick="restartGroup('${g.group_id}')"><i class="fas fa-sync"></i> Restart</button>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  function fmtDur(s) {
+    const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60);
+    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  }
+
+  function escapeHtml(s) {
+    return String(s ?? '').replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  async function loadHistory() {
+    const d = await api('/api/groups');
+    const c = document.getElementById('history-container');
+    if (!d.groups?.length) {
+      c.innerHTML = `<div class="empty-state">
+        <div class="empty-icon"><i class="fas fa-inbox"></i></div>
+        <h3>No history yet</h3>
+        <p>Your launched instances will appear here.</p>
+      </div>`;
+      return;
+    }
+    c.innerHTML = d.groups.map(g => `<div class="surface history-card">
+      <div class="history-head">
+        <div>
+          <div class="history-name">${escapeHtml(g.guild_name || 'Unknown')}</div>
+          <div class="history-meta">${escapeHtml(g.guild_id)} · ${escapeHtml(g.region)}</div>
+        </div>
+        <span class="badge ${g.status === 'RUNNING' ? 'badge-ok' : 'badge-muted'}">
+          <i class="fas fa-circle"></i> ${g.status}
+        </span>
+      </div>
+      <div class="history-stats">
+        <span>Glory: <strong>${g.glory_gained || 0}</strong></span>
+        <span>Bots: ${g.bot_count || 0}</span>
+        <span>${escapeHtml(g.created_at || '')}</span>
+      </div>
+    </div>`).join('');
+  }
+
+  window.redeemCoupon = async function() {
+    await _redeem(document.getElementById('coupon-code').value);
+    document.getElementById('coupon-code').value = '';
+  };
+  window.redeemCoupon2 = async function() {
+    await _redeem(document.getElementById('coupon-code-2').value);
+    document.getElementById('coupon-code-2').value = '';
+  };
+
+  async function _redeem(raw) {
+    const code = (raw || '').trim().toUpperCase();
+    if (!code) return toast('Enter a code', 'error');
+    try {
+      const d = await api('/api/redeem', { method: 'POST', body: JSON.stringify({ code }) });
+      toast(`+${d.credits} credits added!`, 'success');
+      await fetchAll();
+    } catch (ex) {
+      toast(ex.message, 'error');
+    }
+  }
+
+  window.previewGuild = async function() {
+    const guild_id = document.getElementById('launch-guild').value.trim();
+    const region = document.getElementById('launch-region').value;
+    if (!/^\d+$/.test(guild_id)) return toast('Invalid Guild ID', 'error');
+    const btn = document.getElementById('btn-preview');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading…';
+    try {
+      const d = await api('/functions/v1/guild-preview', {
+        method: 'POST', body: JSON.stringify({ guild_id, region })
+      });
+      previewInfo = d.info;
+      const p = document.getElementById('guild-preview');
+      p.classList.add('show');
+      p.innerHTML = `
+        <div class="gp-row"><span>Guild</span><span>${escapeHtml(previewInfo.guild_name || '—')}</span></div>
+        <div class="gp-row"><span>Guild ID</span><span>${escapeHtml(guild_id)}</span></div>
+        <div class="gp-row"><span>Region</span><span>${escapeHtml(region)}</span></div>
+        <div class="gp-row"><span>Level</span><span>${previewInfo.guild_level || '—'}</span></div>
+        <div class="gp-row"><span>Leader</span><span>${escapeHtml(previewInfo.leader_name || '—')}</span></div>
+        <div class="gp-row"><span>Members</span><span>${previewInfo.current_members || 0}/${previewInfo.max_members || 0}</span></div>
+        <div class="gp-row"><span>Weekly Activity</span><span>${previewInfo.weekly_activity || 0}</span></div>
+        <div class="gp-row"><span>Total Activity</span><span>${previewInfo.total_activity || 0}</span></div>`;
+    } catch (ex) {
+      toast(ex.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-search"></i> Preview Guild';
+    }
+  };
+
+  window.openLaunchConfirm = function() {
+    const guild_id = document.getElementById('launch-guild').value.trim();
+    const region = document.getElementById('launch-region').value;
+    if (!/^\d+$/.test(guild_id)) return toast('Invalid Guild ID', 'error');
+    if (!previewInfo) return toast('Preview the guild first', 'error');
+    if (settings?.maintenance?.glory?.[region]) return toast(`${region} under maintenance`, 'error');
+    pendingLaunch = { guild_id, region };
+    document.getElementById('cf-region').textContent = region;
+    document.getElementById('cf-guild').textContent = guild_id;
+    document.getElementById('cf-bots').textContent = settings.bot_count;
+    document.getElementById('cf-cost').textContent =
+      `${settings.credit_per_launch} credit${settings.credit_per_launch > 1 ? 's' : ''}`;
+    document.getElementById('modal-confirm').classList.remove('hidden');
+  };
+
+  window.closeModal = function(id) {
+    document.getElementById(id).classList.add('hidden');
+  };
+
+  window.executeLaunch = async function() {
+    const btn = document.getElementById('cf-go');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Launching…';
+    try {
+      await api('/functions/v1/start-glory', {
+        method: 'POST', body: JSON.stringify(pendingLaunch)
+      });
+      toast('Glory instance started!', 'success');
+      closeModal('modal-confirm');
+      previewInfo = null;
+      document.getElementById('guild-preview').classList.remove('show');
+      document.getElementById('launch-guild').value = '';
+      await fetchAll();
+    } catch (ex) {
+      toast(ex.message, 'error');
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-play"></i> Launch Now';
+    }
+  };
+
+  window.stopGroup = async function(id) {
+    if (!confirm('Stop this instance?')) return;
+    try {
+      await api('/functions/v1/stop-glory', {
+        method: 'POST', body: JSON.stringify({ instance_id: id })
+      });
+      toast('Stopped', 'success');
+      fetchAll();
+    } catch (ex) {
+      toast(ex.message, 'error');
+    }
+  };
+
+  window.restartGroup = async function(id) {
+    try {
+      await api('/functions/v1/restart-glory', {
+        method: 'POST', body: JSON.stringify({ instance_id: id })
+      });
+      toast('Restarted', 'success');
+      fetchAll();
+    } catch (ex) {
+      toast(ex.message, 'error');
+    }
+  };
+
+  // ─── Boot ───
+  (async () => {
+    try {
+      const me = await api('/api/me');
+      currentUser = me.user;
+    } catch {
+      showAuth();
+      return;
+    }
+    showApp();
+    await loadSettings();
+    await fetchAll();
+    setInterval(fetchAll, 5000);
+  })();
+</script>
+<footer class="site-foot">© FF GLORY · <a href="https://t.me/NG_RAXX" target="_blank" rel="noopener">Contact</a> · <a href="https://t.me/NG_RAXXX" target="_blank" rel="noopener">Channel</a></footer>
+<script>
+(function(){var c=window.BG_PUB.GOOGLE_CLIENT_ID,b=document.getElementById('g-login');if(!c){b.innerHTML='<button type="button" class="btn btn-ghost" style="width:100%;padding:12px"><i class="fab fa-google"></i> Continue with Google</button>';b.firstChild.onclick=function(){var e=document.getElementById('g-err');e.textContent='Google login not configured on server (GOOGLE_CLIENT_ID missing).';e.classList.remove('hidden')};return}
+var s=document.createElement('script');s.src='https://accounts.google.com/gsi/client';s.async=true;
+s.onload=function(){google.accounts.id.initialize({client_id:c,callback:function(r){
+fetch('/api/auth/google',{method:'POST',credentials:'include',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential:r.credential})})
+.then(function(x){return x.json()}).then(function(d){if(d.ok)location.reload();else{var e=document.getElementById('g-err');e.textContent=d.error||'Google login failed';e.classList.remove('hidden')}})}});
+google.accounts.id.renderButton(b,{theme:'filled_black',size:'large',shape:'pill',width:300})};document.head.appendChild(s)})();
+</script>
+</body>
+</html>
